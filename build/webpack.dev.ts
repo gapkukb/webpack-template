@@ -10,4 +10,13 @@ export default merge(common, <webpack.Configuration>{
         port: 8080,
         hot: true
     },
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                exclude: /(node_modules|bower_components)/,
+                use: 'ts-loader'
+            },
+        ]
+    }
 })

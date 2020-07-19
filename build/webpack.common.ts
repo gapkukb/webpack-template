@@ -20,12 +20,12 @@ export default <webpack.Configuration>{
     stats: 'errors-only',
     target: "web",
     /** 多页面入口 */
-    entry: {
-        "index": "./src/ts/index.ts",
-        "login": "./src/ts/login.ts"
-    },
+    // entry: {
+    //     "index": "./src/ts/index.ts",
+    //     "login": "./src/ts/login.ts"
+    // },
     /** 单页配置 */
-    //entry: "./src/ts/index.ts",
+    entry: "./src/ts/index.ts",
     output: {
         filename: 'js/[name].js',
         path: path.resolve(__dirname, '../dist'),
@@ -69,16 +69,10 @@ export default <webpack.Configuration>{
     },
     module: {
         rules: [
-            {
-                test: /\.(html)?$/,
-                loader: 'html-loader',
-            },
-
-            {
-                test: /\.tsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                use: 'ts-loader'
-            },
+            // {
+            //     test: /\.(html)?$/,
+            //     loader: 'html-loader',
+            // },
             {
                 test: /\.css$/,
                 use: [miniLoader, 'css-loader']
@@ -122,22 +116,17 @@ export default <webpack.Configuration>{
     plugins: [
         // 自动清空dist目录
         new CleanWebpackPlugin(),
-        // 设置html模板生成路径
+        // 设置html模板生成路径 , 多html则实例化多个HtmlWebpackPlugin
         new HtmlWebpackPlugin({
             filename: 'index.html',
             title: "PIXI",
-            template: './src/htmls/index.ejs',
+            template: './src/index.html',
             // chunks 额外注入模块。在多页情况下，分别指明每个html要注入的js/css模块。如果不指定，会汇入所有模块
             // chunks: ['pixi', 'index'],
             minify: false,
             favicon: "",
             //除了在output.public中指定cdn，还可以在此额外指定css/js cdn
             cdns: cdns
-        }),
-        new HtmlWebpackPlugin({
-            filename: 'login.html',
-            template: './src/htmls/login.ejs',
-            // chunks: ['pixi', 'login']
         }),
         //定义全局变量，就不用在每个模块都import/require了,可以直接使用变量。
         //key是变量  value是导入的模块名.不需要再 import $ from "jquery" 进行导入而直接使用$变量
