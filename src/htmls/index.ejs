@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="<%= htmlWebpackPlugin.options.favicon %>" type="image/x-icon">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <% htmlWebpackPlugin.options.cdns.css.forEach(item=>{%>
+    <link href="<%= item %>" rel="stylesheet" />
+    <% })%>
+</head>
+<body>
+    <img src="~@/img/block.png" alt="">
+
+
+<% htmlWebpackPlugin.options.cdns.js.forEach(item=>{ %>
+<script src="<%= item %>"></script>
+<% }) %>
+</body>
+</html>
