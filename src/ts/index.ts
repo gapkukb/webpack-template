@@ -1,9 +1,3 @@
-import "@/stylus/app.styl";
-import "@/stylus/index.styl";
-
-// const app = new PIXI.Application({
-//     width:750,
-//     height:1334
-// })
-
+$("body").css("background","red")
+console.log(process.env.NODE_ENV)
 console.log($('body'));
