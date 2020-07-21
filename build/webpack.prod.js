@@ -1,6 +1,6 @@
 const webpack = require("webpack")
 const path = require("path")
-const merge = require("webpack-merge").merge;
+const { merge, mergeWithCustomize, unique, customizeArray, customizeObject } = require("webpack-merge");
 const common = require("./webpack.common");
 /* 压缩css */
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -10,16 +10,19 @@ const TerserJSPlugin = require("terser-webpack-plugin");
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 //分包，页面打入多个<script>标签进行引用。对于SplitChunk还是会对基础包进行分析。项目不大可以使用。推荐使用DLLPlugin预编译来自动分包
 const HtmlWebpackExternalsPlugin = require("html-webpack-externals-plugin");
+const mode = "production"
 
-module.exports = merge(common, {
+const cfg = merge(common(mode), {
+    mode,
     //source-map 更好更详细但是文件体积更大
     devtool: 'cheap-module-source-map',
     optimization: {
         minimizer: [
+            //压缩css
             new OptimizeCssAssetsPlugin({}),
             //uglifyJSPlugin不支持es6语法，所以使用TerserJSPlugin压缩
             new TerserJSPlugin({
-                cache: true, // 是否缓存
+                cache: false, // 是否缓存,生产环境不需要缓存
                 parallel: true, // 是否并行打包，小项目不建议开启，反而会拖慢速度
                 sourceMap: true,
             })
@@ -27,16 +30,37 @@ module.exports = merge(common, {
     },
     module: {
         rules: [
-
+            {
+                test: /\.tsx?$/,
+                exclude: /node_modules/,
+                use: ['babel-loader', 'ts-loader']
+            },
+            {
+                test: /\.(png|jpe?g|gif|webp)(\?.*)?$/i,
+                use: [
+                    //图片压缩
+                    {
+                        loader: 'image-webpack-loader',
+                        //还可以针对每种格式的图片进行不同的设置，
+                        //参见  https://www.npmjs.com/package/image-webpack-loader
+                        options: {
+                            bypassOnDebug: true,
+                            disable: true
+                        },
+                    }
+                ]
+            },
         ]
     },
     plugins: [
+        //如果压缩东西太多影响打包速度，可以考虑使用thread-loader多线程打包
         new CompressionWebpackPlugin({
-            filename: '[path].gz[query]',
-            algorithm: 'gzip',
-            test: new RegExp('\\.(js|css|png|jpg|webp)$'),
-            threshold: 10240,
-            minRatio: 0.8
+            test: /\.(js|css|html?)(\?.*)?$/i,//需要压缩的资源的匹配规则.一定不要压缩图片
+            filename: '[path].gz[query]',//输出的路径，这里输出到和原始资源同路径
+            algorithm: 'gzip', //压缩算法，gzip压缩
+            threshold: 1000, //仅处理大于此大小的资源（以字节为单位）10240byte=10.24KB
+            minRatio: 0.6, //仅处理压缩率大于此选项的资源
+            compressionOptions: { level: 5 }, // 压缩等级1-9，越高越消耗客户端cpu，建议使用5等级
         }),
         //分包，哪些依赖包会被替换成cdn而不被打包
         //由于是手动引入，小项目可以使用，大项目推荐使用webpack.DllPlugin
@@ -49,9 +73,20 @@ module.exports = merge(common, {
         //         },
         //     ],
         // }),
-        /*分包 webpack 自带的分包功能，结合webpack.DllPlugin使用，见webpack.libs.ts */
+        /*分包 webpack 自带的分包功能，结合webpack.DllPlugin使用，见webpack.libs.js */
         new webpack.DllReferencePlugin({
             manifest: require(path.resolve(__dirname, '../libs/library.json')),
-        })
+        }),
+        new webpack.EnvironmentPlugin({
+            DEBUG: false,
+            BASE_URL: "production 默认值",
+        }),
+        /* 提取css */
+        new MiniCssExtractPlugin({
+            filename: 'css/app.[contenthash:6].css'
+        }),
+
     ]
 })
+
+module.exports = cfg

@@ -1,10 +1,15 @@
 const webpack = require("webpack");
 const merge = require("webpack-merge").merge;
 const common = require("./webpack.common");
-
-module.exports = merge(common, {
-    mode: "development",
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const mode = "development"
+module.exports = merge(common(mode), {
+    mode,
     devtool: 'cheap-module-eval-source-map',
+    output: {
+        filename: 'js/[name].js',
+        chunkFilename: 'js/[name].[contenthash:6].js',
+    },
     devServer: {
         contentBase: "./dist",
         port: 8080,
@@ -48,7 +53,7 @@ module.exports = merge(common, {
             }
         },
         before(app, server, compiler) {
-            // 其他中间件之前， 提供执行自定义中间件 . 这里返回自定义数据。apiMocker
+            // 其他中间件之前， 提供执行自定义中间件 . 这里返回自定义数据。'webpack-api-mocker'
             app.get('/some/path', function (req, res) {
                 res.json({ custom: 'response' });
             });
@@ -58,7 +63,34 @@ module.exports = merge(common, {
     },
     module: {
         rules: [
-
+            {
+                test: /\.tsx?$/,
+                loader: 'ts-loader',
+                include: path.resolve(__dirname, '../src'),
+                exclude: /node_modules/,
+                options: {
+                    transpileOnly: true
+                }
+            }
         ]
-    }
+    },
+    plugins: [
+        // // 定义全局变量，打包后直接替换为字符串，number和boolean不用JSON转字符串
+        // // 代码中使用 key访问  NODE_ENV . 不推荐此方式
+        // new webpack.DefinePlugin({
+        //     NODE_ENV: JSON.stringify("/api/smartsecurity"),
+        //     BASE_URL: JSON.stringify("/api/smartsecurity"),
+        // }),
+        // EnvironmentPlugin插件是DefinePlugin的简写方式 代码中使用process.env.NODE_ENV的方式访问
+        // 推荐此方式.这里定义的只是默认值，如果process.env切实存在该属性的值，那么会覆盖默认值.比如process.env.DEBUG=false会覆盖下面设置的true
+        // EnvironmentPlugin不需要使用JSON.stringify因为它内部已经处理了
+        // 如果在捆绑过程中未找到环境变量，并且未提供默认值，则webpack将抛出错误而不是警告。
+        // https://www.webpackjs.com/plugins/environment-plugin/
+        // webpack已经定义好了 NODE_ENV 属性，不需要再次定义
+        new webpack.EnvironmentPlugin({
+            DEBUG: true,
+            BASE_URL: "默认值",
+        }),
+        new ForkTsCheckerWebpackPlugin()
+    ]
 })

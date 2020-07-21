@@ -1,11 +1,10 @@
 module.exports = function (api) {
     api.cache(true)
-
     const presets = [
         [
             '@babel/preset-env',
             {
-                modules: false
+                modules: false //false会开启tree-shaking。只针对ES模块，CJS模块不支持
             }
         ],
         '@babel/preset-typescript'
@@ -17,6 +16,7 @@ module.exports = function (api) {
 
     return {
         presets,
-        plugins
+        plugins,
+        comments: true,
     }
 }
