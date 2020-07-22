@@ -1,19 +1,6 @@
-// import $ from "jquery";
-// console.log(process.env.NODE_ENV)
-// console.log(process.env.DEBUG)
-// console.log(process.env.BASE_URL)
+import dayjs from "dayjs";
+import jquery from "jquery";
+import lodashEs from "lodash-es";
+import math from "mathjs";
+import chart from "chart.js";
 
-// console.log($('body'));
-
-enum Abc {
-    A = 1,
-    B = 2,
-    C,
-    D = "我了个去"
-}
-console.log(Abc.A);
-console.log(Abc.B);
-console.log(Abc.C);
-console.log(Abc.D);
-import { label } from "../i18n/cn.json";
-console.log(label);

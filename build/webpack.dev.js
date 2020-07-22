@@ -63,15 +63,7 @@ module.exports = merge(common(mode), {
     },
     module: {
         rules: [
-            {
-                test: /\.tsx?$/,
-                loader: 'ts-loader',
-                include: path.resolve(__dirname, '../src'),
-                exclude: /node_modules/,
-                options: {
-                    transpileOnly: true
-                }
-            }
+
         ]
     },
     plugins: [

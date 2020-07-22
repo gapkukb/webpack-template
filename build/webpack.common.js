@@ -1,11 +1,14 @@
 const webpack = require("webpack");
 const path = require("path");
+const fs = require("fs");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const threadLoader = require("thread-loader");
 const stylesLoader = require("./styles.loader.config")
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
+
+export const resolve = (...dir) => path.join(__dirname, '..', ...dir);
 //如果 thread-loader 和 cache-loader 兩個要一起使用的話，請先放 cache-loader 接著是 thread-loader 最後才是 heavy-loader，這樣的順序才可以有最好的效能。
 //多线程预热，指定哪些loader需要进行多线程加速。小项目不建议使用，反而会拖慢速度
 threadLoader.warmup({
@@ -20,8 +23,23 @@ threadLoader.warmup({
 ]);
 
 //如果要兼容IE8这种不支持ES5的浏览器，打这两个补丁 es5-shim.min.js es5-sham.min.js
+const files = fs.readdirSync(resolve('dll')), dllPlugins = []
+files.forEach(file => {
+    if (/\.dll/.test(file)) {
+        //结合html-webpack-plugin注入静态资源
+        plugins.push(new AddAssetHtmlWebpackPlugin({
+            filepath: resolve('dll', file)
+        }))
+    }
+    if (/\.manifest/.test(file)) {
+        /*分包 webpack 自带的分包功能，结合webpack.DllPlugin使用，见webpack.libs.js */
+        plugins.push(new webpack.DllReferencePlugin({
+            manifest: resolve('dll', file)
+        }))
+    }
+})
 
-module.exports = function (mode) {
+module.exports = (mode) => {
     const isProd = mode === "development"
     return {
         devtool: 'source-map',
@@ -36,8 +54,9 @@ module.exports = function (mode) {
         /** 单页配置 */
         entry: "./src/ts/index.ts",
         output: {
+            pathinfo: false,
             filename: 'js/[name].[contenthash:6].js',
-            path: path.resolve(__dirname, '../dist'),
+            path: resolve('../dist'),
             chunkFilename: 'js/[name].[contenthash:6].js',//代码分割的模块命名方式
             /** publicPath 静态资源前缀-公共路径,可在生产替换成cdn */
             // publicPath: "",
@@ -52,18 +71,24 @@ module.exports = function (mode) {
         // externals: {
         //     'jquery': "jQuery"
         // },
-        //module模块选项
-        module: {
-            //webpack不追溯匹配项内部的导入机制，被忽略的对象不应该含有import require define等导入代码
-            //用于在大型项目中忽略大型第三方库,提升构建速度
-            noParse: /jquery|lodash/,
-        },
         //解析规则
         resolve: {
+            symlinks: false,
+            // 针对 Npm 中的第三方模块优先采用 jsnext:main 中指向的 ES6 模块化语法的文件
+            //以便于webpack进行Scope Hoisting，好处是代码体积更小，运行内存开销也随之变小
+            mainFields: [
+                'jsnext:main',
+                'browser',
+                'main'
+            ],
             // 指定node_modules的位置
-            modules: [path.resolve(__dirname, 'node_modules')],
+            modules: [
+                resolve('node_modules'),
+                resolve('src'),
+            ],
             //自动识别后缀名，如import 'index'时会自动按extensions顺序查找index.ts或者index.js.常用的文件后缀靠前
-            extensions: ['.tsx', '.ts', '.js', '.jsx', '.json', '.wasm'],
+            //尽量少些，缩小匹配范围增加打包速度 '.tsx', '.ts', '.js', '.jsx', '.json', '.wasm'
+            // extensions: [],
             //模块别名，减少搜索层级
             alias: {
                 //将src路径全局解析到@符号，会自动计算导入@的文件的位置到src的路径
@@ -78,6 +103,8 @@ module.exports = function (mode) {
         optimization: {
             splitChunks: {
                 cacheGroups: {
+                    default: false,
+                    vendors: false,
                     commons: {
                         // 打包时，文件路径包含jquery会的js会被抽离打包为jquery.js
                         test: /jquery/,
@@ -96,6 +123,8 @@ module.exports = function (mode) {
             }
         },
         module: {
+            //忽略未采用模块化的文件，提升构建速度,被忽略的对象不应该含有import require define等导入代码,
+            noParse: /jquery|lodash/,
             rules: [
                 // {
                 //     test: /\.(html)?$/,
@@ -118,13 +147,13 @@ module.exports = function (mode) {
                     include: "src",
                     use: [
                         'cache-loader',
-                        'babel-loader',
+                        isProd ? 'babel-loader' : '',
                     ]
                 },
                 /* ts tsx */
                 {
                     test: /\.tsx?$/i,
-                    include: "src",
+                    include: resolve("src"),
                     use: [
                         'cache-loader',
                         isProd ? 'babel-loader' : '',
@@ -132,9 +161,9 @@ module.exports = function (mode) {
                             loader: 'ts-loader',
                             options: {
                                 transpileOnly: true,
-                                happyPackMode: false,
-                                compilerOptions: {
-                                }
+                                happyPackMode: true,
+                                experimentalWatchApi: true,
+                                compilerOptions: {}
                             }
                         }
                     ]

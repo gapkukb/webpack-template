@@ -10,6 +10,8 @@ const TerserJSPlugin = require("terser-webpack-plugin");
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 //分包，页面打入多个<script>标签进行引用。对于SplitChunk还是会对基础包进行分析。项目不大可以使用。推荐使用DLLPlugin预编译来自动分包
 const HtmlWebpackExternalsPlugin = require("html-webpack-externals-plugin");
+const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin')
+
 const mode = "production"
 
 const cfg = merge(common(mode), {
@@ -17,9 +19,24 @@ const cfg = merge(common(mode), {
     //source-map 更好更详细但是文件体积更大
     devtool: 'cheap-module-source-map',
     optimization: {
+        runtimeChunk: 'single',
         minimizer: [
             //压缩css
-            new OptimizeCssAssetsPlugin({}),
+            new OptimizeCssAssetsPlugin({
+                assetNameRegExp: /\.css\.*(?!.*map)/g,
+                cssProcessorOptions: {
+                    sourceMap: false,
+                    safe: true,
+                    //autoprefixer 加好的前缀会被移除掉，这里禁用它以保证前缀不被移除
+                    // autoprefixer: { disable: true },
+                    autoprefixer:false,
+                    mergeLonghand: false,
+                    discardComments: {
+                        removeAll: true // 移除注释
+                    }
+                },
+                canPrint: true
+            }),
             //uglifyJSPlugin不支持es6语法，所以使用TerserJSPlugin压缩
             new TerserJSPlugin({
                 cache: false, // 是否缓存,生产环境不需要缓存
@@ -73,10 +90,7 @@ const cfg = merge(common(mode), {
         //         },
         //     ],
         // }),
-        /*分包 webpack 自带的分包功能，结合webpack.DllPlugin使用，见webpack.libs.js */
-        new webpack.DllReferencePlugin({
-            manifest: require(path.resolve(__dirname, '../libs/library.json')),
-        }),
+
         new webpack.EnvironmentPlugin({
             DEBUG: false,
             BASE_URL: "production 默认值",
@@ -85,7 +99,20 @@ const cfg = merge(common(mode), {
         new MiniCssExtractPlugin({
             filename: 'css/app.[contenthash:6].css'
         }),
-
+        /* config.plugin('optimize-css') */
+        // new OptimizeCssnanoPlugin({
+        //     sourceMap: false,
+        //     cssnanoOptions: {
+        //         preset: [
+        //             'default',
+        //             {
+        //                 mergeLonghand: false,
+        //                 cssDeclarationSorter: false
+        //             }
+        //         ]
+        //     }
+        // }),
+        new InlineManifestWebpackPlugin('runtime')
     ]
 })
 
