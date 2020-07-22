@@ -70,6 +70,8 @@ const cfg = merge(common(mode), {
         ]
     },
     plugins: [
+        //启用Scope Hoisting,生成体积更小运行更快的代码
+        new webpack.optimize.ModuleConcatenationPlugin(),
         //如果压缩东西太多影响打包速度，可以考虑使用thread-loader多线程打包
         new CompressionWebpackPlugin({
             test: /\.(js|css|html?)(\?.*)?$/i,//需要压缩的资源的匹配规则.一定不要压缩图片

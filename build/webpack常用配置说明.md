@@ -20,11 +20,12 @@ DLLPlugin 与 splitChunks 的区别
 
     1. splitChunks(推荐使用).可以通过配置实现细致的分离。将包分离到本地通过script引入
 
-    2. DLLPlugin + DLLReferencePlugin 预编译方案，对于依赖的第三方库，比如vue，vuex等这些不会修改的依赖，我们可以让它和我们自己编写的代码分开打包，这样做的好处是每次更改我本地代码的文件的时候，webpack只需要打包我项目本身的文件代码，而不会再去编译第三方库。原理是先通过DLLPlugin将包打包到本地再通过DLLReferencePlugin插件script引入。缺点：Dllplugin 和 externals均是全量引入，由于不经过webpack，按需加载的福利自然也无法享受到，而且dll对于重复导入的库会重复打包，**此方案适合vue react这类无依赖的，不会轻易变动，且没有模块化的第三方库，如lodash-es支持es模块化按需加载，就不要这么做**。
+    2. DLLPlugin + DLLReferencePlugin 预编译方案，对于依赖的第三方库，比如vue，vuex等这些不会修改的依赖，我们可以让它和我们自己编写的代码分开打包，这样做的好处是每次更改我本地代码的文件的时候，webpack只需要打包我项目本身的文件代码，而不会再去编译第三方库。原理是先通过DLLPlugin将包打包到本地再通过DLLReferencePlugin插件script引入。缺点：Dllplugin 和 externals均是全量引入，由于不经过webpack，按需加载的福利自然也无法享受到，而且dll对于重复导入的库会重复打包，**此方案适合vue react这类无依赖的，不会轻易变动，且没有模块化的第三方库，如lodash-es支持es模块化按需加载，就不要这么做**。DLL由于是本地文件，也有利于做离线缓存
 
     3. html-webpack-externals-plugin + html-webpack-plugin + externals,先通过externals设置告知webpack不打包目标库，再通过html-webpack-externals-plugin手动配置要注入的依赖，html-webpack-plugin会自动将配置打包进html同的script标签。优点是html-webpack-externals-plugin和webpack打包的上下文环境无关，可以注入任何库文件甚至是CDN地址，缺点是需要手动配置。
 
     4. externals + html。此方案是第三点方案的更手动的版本。在HTML文件中，script引入目标库（可以是CDN）。同时通过externals设置告知webpack不打包目标库(这一步可以省略，甚至不需要安装目标包，如果是typescript且不安装包则要安装声明包已获得代码检查能力或者自定义声明文件)
+    5. externals + webpack-cdn-plugin。打包忽略并引入CDN
 
 ---
 1.externals后，目标库会被过滤而不生成代码，所以webpack的externals更适合把第三方库移到CDN上
@@ -175,3 +176,43 @@ module.exports = {
 }
 
 ```
+### babel-loader
+
+1.开启按需加载，配置@babel/env的useBuiltIns为'usage'，package.json里写上browserslist就可以了。建议在生产环境使用
+2.babel-loader?cacheDirector
+3.hard-source-webpack-plugin 提升二次编译速度
+4.cache-loader 提升二次编译速度
+5.thread-loader 多线程编译
+6.happypack 多线程编译
+
+
+### 常见插件
+1. HotModuleReplacementPlugin 模块热更新插件。Hot-Module-Replacement 的热更新是依赖于 webpack-dev-server，后者是在打包文件改变时更新打包文件或者 reload 刷新整个页面，HRM 是只更新修改的部分。HotModuleReplacementPlugin是webpack模块自带的，所以引入webpack后，在plugins配置项中直接使用即可。
+2. html-webpack-plugin 生成 html 文件。将 webpack 中entry配置的相关入口 chunk 和 extract-text-webpack-plugin抽取的 css 样式 插入到该插件提供的template或者templateContent配置项指定的内容基础上生成一个 html 文件，具体插入方式是将样式link插入到head元素中，script插入到head或者body中。关于此插件还衍生了许多周边插件
+3. clean-webpack-plugin 。 clean-webpack-plugin 用于在打包前清理上一次项目生成的 bundle 文件，它会根据 output.path 自动清理文件夹；这个插件在生产环境用的频率非常高，因为生产环境经常会通过 hash 生成很多 bundle 文件，如果不进行清理的话每次都会生成新的，导致文件夹非常庞大。
+4. mini-css-extract-plugin  将 CSS 提取为独立的文件的插件，对每个包含 css 的 js 文件都会创建一个 CSS 文件，支持按需加载 css 和 sourceMap。只能用在 webpack4 中。暂时不支持 HMR
+5. purifycss-webpack 清理css重复和未使用的代码，我们希望在生产环境进行去除。
+6. optimize-css-assets-webpack-plugin。 减小 css 打包后的体积默认使用cssnano，生产环境推荐
+7. terser-webpack-plugin JS压缩，Webpack4.0 默认是使用 terser-webpack-plugin 这个压缩插件
+8. NoErrorsPlugin 报错但不退出 webpack 进程。编译出现错误时，使用 NoEmitOnErrorsPlugin 来跳过输出阶段。这样可以确保输出资源不会包含错误。
+9. compression-webpack-plugin  GZIP压缩。所有现代浏览器都支持 gzip 压缩，启用 gzip 压缩可大幅缩减传输资源大小，从而缩短资源下载时间，减少首次白屏时间，提升用户体验。压缩率1-9，推荐使用6
+10. DefinePlugin 定义一些全局的变量，我们可以在模块当中直接使用这些变量，无需作任何声明，DefinePlugin 是 webpack 自带的插件。
+11. ProvidePlugin 自动加载模块。 任何时候，当 identifier（标识符） 被当作未赋值的变量时， module 就会自动被加载，并且 identifier 会被这个 module 输出的内容所赋值。这是 webpack 自带的插件。
+12. DLLPlugin 这是在一个额外的独立的 webpack 设置中创建一个只有 dll 的 bundle(dll-only-bundle)。 这个插件会生成一个名为 manifest.json 的文件，这个文件是用来让 DLLReferencePlugin 映射到相关的依赖上去的。
+13. HappyPack 。HappyPack 能让 webpack 把任务分解给多个子进程去并发的执行，子进程处理完后再把结果发送给主进程。要注意的是 HappyPack 对 file-loader、url-loader 支持的不友好，所以不建议对该 loader 使用
+14. copy-webpack-plugin。我们在 public/index.html 中引入了静态资源，但是打包的时候 webpack 并不会帮我们拷贝到 dist 目录，因此 copy-webpack-plugin 就可以很好地帮我做拷贝的工作了。
+15. IgnorePlugin 这是 webpack 内置插件，它的作用是：忽略第三方包指定目录，让这些指定目录不要被打包进去。
+比如我们要使用 moment 这个第三方依赖库，该库主要是对时间进行格式化，并且支持多个国家语言。虽然我设置了语言为中文，但是在打包的时候，是会将所有语言都打包进去的。这样就导致包很大，打包速度又慢。对此，我们可以用 IgnorePlugin 使得指定目录被忽略，从而使得打包变快，文件变小。如果需要使用被忽略的路径中的模块，需要在代码中显示导入
+
+
+
+
+
+
+
+
+----
+[淘宝团队webpack splitChunk优化文章](https://juejin.im/post/5edd942af265da76f8601199)
+----
+
+
