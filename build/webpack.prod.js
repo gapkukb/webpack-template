@@ -1,6 +1,7 @@
 const webpack = require("webpack")
 const path = require("path")
-const { merge, mergeWithCustomize, unique, customizeArray, customizeObject } = require("webpack-merge");
+const { merge } = require("webpack-merge");
+const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const common = require("./webpack.common");
 /* 压缩css */
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -29,7 +30,7 @@ const cfg = merge(common(mode), {
                     safe: true,
                     //autoprefixer 加好的前缀会被移除掉，这里禁用它以保证前缀不被移除
                     // autoprefixer: { disable: true },
-                    autoprefixer:false,
+                    autoprefixer: false,
                     mergeLonghand: false,
                     discardComments: {
                         removeAll: true // 移除注释
@@ -70,6 +71,7 @@ const cfg = merge(common(mode), {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin(),
         //启用Scope Hoisting,生成体积更小运行更快的代码
         new webpack.optimize.ModuleConcatenationPlugin(),
         //如果压缩东西太多影响打包速度，可以考虑使用thread-loader多线程打包
