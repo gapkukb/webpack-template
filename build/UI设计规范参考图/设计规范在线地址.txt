@@ -1,0 +1,10 @@
+参考知乎文章：https://www.zhihu.com/question/29936125
+
+https://rizzo.lonelyplanet.com/styleguide/ui-components/cards
+https://www.lightningdesignsystem.com/
+https://developer.apple.com/design/human-interface-guidelines/ios/views/tables/
+https://material.io/design/navigation/understanding-navigation.html#types-of-navigation
+https://rizzo.lonelyplanet.com/styleguide/design-elements/colours
+
+样式规范聚合站：
+http://styleguides.io/examples
