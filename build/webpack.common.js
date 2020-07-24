@@ -13,7 +13,7 @@ module.exports = (mode) => {
         devtool: 'source-map',
         stats: 'errors-only',
         target: "web",
-        entry: "./src/ts/index.ts",
+        entry: "./src/index.ts",
         output: {
             pathinfo: false,
             filename: 'js/[name].[contenthash:6].js',
@@ -49,7 +49,7 @@ module.exports = (mode) => {
                     use: {
                         loader: 'ts-loader',
                         options: {
-                            transpileOnly: true,
+                            // transpileOnly: true,
                             happyPackMode: true,
                             experimentalWatchApi: true,
                             compilerOptions: {}
@@ -123,14 +123,6 @@ module.exports = (mode) => {
                     ]
                 },
                 {
-                    test: /worker\.js$/i,
-                    use: [
-                        {
-                            loader: 'worker-loader'
-                        }
-                    ]
-                },
-                {
                     test: /\.css$/i,
                     use: [
                         'style-loader',
@@ -155,9 +147,9 @@ module.exports = (mode) => {
                             options: {
                                 sourceMap: false,
                                 importLoaders: 2,
-                                modules: {
-                                    localIdentName: '[name]_[local]_[hash:base64:5]'
-                                }
+                                // modules: {
+                                //     localIdentName: '[name]_[local]_[hash:base64:5]'
+                                // }
                             }
                         },
                         {
@@ -190,7 +182,7 @@ module.exports = (mode) => {
                     }
                 ],
             }),
-            new ForkTsCheckerWebpackPlugin()
+            // new ForkTsCheckerWebpackPlugin()
         ]
     }
 }

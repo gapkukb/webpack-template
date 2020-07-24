@@ -43,6 +43,7 @@
     "webpack-merge": "^5.0.9"
   },
   "dependencies": {
+    "helpful-decorators": "^2.1.0",
     "matter-js": "^0.14.2",
     "pixi.js": "^5.3.0"
   },

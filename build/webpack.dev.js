@@ -8,16 +8,16 @@ module.exports = merge(common(mode), {
     devtool: 'cheap-module-eval-source-map',
     output: {
         filename: 'js/[name].js',
-        chunkFilename: 'js/[name].[contenthash:6].js',
+        chunkFilename: 'js/[name].js',
     },
     devServer: {
         contentBase: "./dist",
         port: 8080,
         hot: true,
+        watchContentBase: true
     },
     module: {
         rules: [
-
         ]
     },
     plugins: [
@@ -25,6 +25,7 @@ module.exports = merge(common(mode), {
         new webpack.EnvironmentPlugin({
             DEBUG: true,
             BASE_URL: "默认值",
-        })
+        }),
+
     ]
 })

@@ -1,3 +1,25 @@
 *
     margin: 0
     padding: 0
+    box-sizing: border-box
+#overlay
+    width: 100vw
+    height 100vh
+    display flex
+    justify-content: center
+    align-items: center
+    background: radial-gradient(#6d6a94,#484290)
+#loading
+    width: 100px
+    height 100px
+    padding: 10px
+    background-color rgba(0,0,0,.5)
+    border-radius: 10px
+    &:after
+        content: "载入中..."
+canvas
+    display block
+    background: blue
+    position fixed
+    left 0
+    top 0
