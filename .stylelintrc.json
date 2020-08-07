@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "stylelint-plugin-stylus/recommended",
+    "prettier-stylelint/config.js"
+  ],
+  "rules": {
+    "string-quotes": "double"
+  }
+}

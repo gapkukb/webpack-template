@@ -4,6 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
+    "eslint": "eslint src --fix --ext .ts,.tsx,.js,.jsx",
+    "stylelint": "stylelint src/*.{vue,css,styl} --custom-syntax stylelint-plugin-stylus/custom-syntax",
     "check": "tsc -w",
     "inspect": "webpack --config build/webpack.analyzer.js --profile",
     "dll": "webpack --config build/webpack.dll.js",
@@ -34,6 +36,8 @@
     "@types/terser-webpack-plugin": "^3.0.0",
     "@types/webpack-dev-server": "^3.11.0",
     "@types/webpack-env": "^1.15.2",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
     "autoprefixer": "^9.8.5",
     "babel-loader": "^8.1.0",
     "babel-plugin-dynamic-import-polyfill": "^1.0.0",
@@ -45,6 +49,10 @@
     "copy-webpack-plugin": "^6.0.3",
     "css-loader": "^3.6.0",
     "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "file-loader": "^6.0.0",
     "fork-ts-checker-webpack-plugin": "^5.0.7",
     "friendly-errors-webpack-plugin": "^1.7.0",
@@ -65,9 +73,12 @@
     "postcss-loader": "^3.0.0",
     "prefetch-webpack-plugin": "0.0.1",
     "preload-webpack-plugin": "^3.0.0-beta.4",
+    "prettier": "^2.0.5",
     "source-map-loader": "^1.0.1",
     "speed-measure-webpack-plugin": "^1.3.3",
     "style-loader": "^1.2.1",
+    "stylelint": "^13.6.1",
+    "stylelint-plugin-stylus": "^0.9.0",
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
     "terser-webpack-plugin": "^3.0.7",
@@ -117,8 +128,8 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,styl,scss,svg,json,md,html}": [
-      "eslint --cache --fix",
       "prettier --write",
+      "eslint",
       "git add"
     ]
   }

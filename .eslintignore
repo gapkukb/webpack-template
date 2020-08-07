@@ -1,0 +1,7 @@
+#node_modules 默认会被忽略
+dist
+public
+src/stylus
+src/img
+build
+.vscode
