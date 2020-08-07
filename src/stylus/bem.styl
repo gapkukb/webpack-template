@@ -1,0 +1,70 @@
+namespace ?= 'ui-';
+element-prefix ?= '__';
+modifier-prefix ?= '--';
+modifier-delimiter ?= '_';
+group-store = ();
+
+str()
+    join('', arguments);
+
+block(name)
+    .{namespace + name}
+        {block};
+
+group()
+    caller = called-from[0];
+    level = length(called-from) + 1;
+    elements = group-store[level];
+    selector = ();
+    parent = null;
+
+    {join(',', elements)}
+        {block};
+
+    group-store[level] = null;
+
+modifier(mod, val = null)
+    val = val && (modifier-delimiter + val);
+    mod = modifier-prefix + mod;
+    mod = val ? ((mod + val)) : mod;
+    caller = called-from[0];
+    group = 'group';
+
+    if (caller in group)
+        level = length(called-from);
+        mod = str('&', mod);
+
+        if (group-store[level] == null)
+            group-store[level] = mod;
+        else
+            push(group-store[level], mod);
+
+    &{mod}
+        {block};
+
+element(ele)
+    ele = element-prefix + ele;
+    caller = called-from[0];
+    gcaller = called-from[1];
+    callerPool = 'element' 'modifier';
+    group = 'group';
+
+    if (caller in group)
+        level = length(called-from);
+
+        if (gcaller in callerPool)
+            ele = str('& ^[0]', ele);
+        else
+            ele = str('^[0]', ele);
+
+        if (group-store[level] == null)
+            group-store[level] = ele;
+        else
+            push(group-store[level], ele);
+    else
+        if (caller in callerPool)
+            & ^[0]{ele}
+                {block};
+        else
+            &{ele}
+                {block};
