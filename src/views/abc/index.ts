@@ -5,16 +5,6 @@ import "@/hmr.js";
 // if (module.hot) {
 //     module.hot.accept()
 // }
-console.log(13000)
+console.log(13000);
 
-process.env.MODE
-
-
-
-
-
-
-
-
-
-
+var aaa    = process.env.MODE;

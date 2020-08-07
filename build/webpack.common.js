@@ -57,12 +57,12 @@ config.resolve
 // })
 
 config.plugin('html')
-.use(HtmlWebpackPlugin,[
-    {
-        template:'./src/views/abc/index.html',
-        filename:'index.html'
-    }
-])
+    .use(HtmlWebpackPlugin, [
+        {
+            template: './src/views/abc/index.html',
+            filename: 'index.html'
+        }
+    ])
 
 config
     .plugin('copy')
@@ -108,8 +108,8 @@ config
 
 config
     .plugin('friendly-error')
-    .use(FriendlyErrorsWebpackPlugin,[{
-        quiet:true
+    .use(FriendlyErrorsWebpackPlugin, [{
+        quiet: true
     }])
 
 
