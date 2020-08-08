@@ -10,7 +10,7 @@
     "inspect": "webpack --config cmd/webpack.analyzer.js --profile",
     "dll": "webpack --config cmd/webpack.dll.js",
     "dev": "webpack-dev-server --open --config cmd/webpack.dev.js",
-    "build": "webpack --config cmd/webpack.prod.js",
+    "build": "webpack --config cmd/webpack.prod.js --progress",
     "build2": "webpack --config cmd/webpack.common.js",
     "postinstall": "npm cache clean --force"
   },
@@ -104,6 +104,7 @@
     "webpack-chain": "^6.5.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
+    "webpack-fix-style-only-entries": "^0.5.1",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^5.0.9"
   },
@@ -132,7 +133,5 @@
     "IOS >= 8",
     "IE >= 9"
   ],
-  "husky": {
-
-  }
+  "husky": {}
 }

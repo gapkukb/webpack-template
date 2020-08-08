@@ -20,6 +20,6 @@ glob.sync(root + '**/*.{js,ts}').forEach((item) => {
   });
 }, {});
 
-console.log(pages);
+// console.log(pages);
 module.exports.pages = pages;
 module.exports.entries = entries;

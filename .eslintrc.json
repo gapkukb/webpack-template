@@ -7,15 +7,38 @@
     "worker": true,
     "es2020": true
   },
-  "extends": ["alloy", "alloy/typescript"],
+  "plugins": ["@typescript-eslint"],
+  "extends": ["plugin:@typescript-eslint/recommended", "prettier/@typescript-eslint", "plugin:prettier/recommended"],
   "parserOptions": {
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "./src",
     "ecmaVersion": 11,
     "sourceType": "module"
   },
-  "plugins": [],
+  "overrides": [
+    {
+      "files": ["src/**/*.js", "src/**/*.jsx"],
+      "parser": "babel-eslint"
+    },
+    {
+      "files": ["typing/*.d.ts"],
+      "rules": {
+        "import/no-duplicates": "OFF"
+      }
+    },
+    {
+      "files": ["src/**/*.ts"],
+      "rules": {
+        "import/no-extraneous-dependencies": "OFF"
+      }
+    }
+  ],
+
   "rules": {
     "no-console": "off",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-unused-vars": "off"
   },
   "settings": {
     "import/parsers": {
@@ -31,19 +54,5 @@
         "directory": ["./tsconfig.json"]
       }
     }
-  },
-  "overrides": [
-    {
-      "files": ["**/*.d.ts"],
-      "rules": {
-        "import/no-duplicates": "OFF"
-      }
-    },
-    {
-      "files": ["src/**/*.ts"],
-      "rules": {
-        "import/no-extraneous-dependencies": "OFF"
-      }
-    }
-  ]
+  }
 }

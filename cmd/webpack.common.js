@@ -2,7 +2,6 @@ const path = require('path');
 const Config = require('webpack-chain');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPathAssetsFix = require('html-webpack-plugin-assets-fix');
@@ -10,9 +9,13 @@ const HtmlWebpackPathAssetsFix = require('html-webpack-plugin-assets-fix');
 const util = require('util');
 const { entries, pages } = require('./html.config');
 const resolve = (...paths) => path.resolve(__dirname, ...paths);
+const filename = (pathPrefix, ext) => `${pathPrefix}/[name].[contenthash:6]${ext}`;
+const jsname = filename('script', '.js');
+const mediaImgFontName = '[name].[hash:6].[ext]';
+
 const publicPath = '/';
 /* 开启eslint */
-const enableEslint = true;
+const enableEslint = false;
 //环境变量
 const ENV_VARS = {
   DEBUG: false,
@@ -23,16 +26,19 @@ const ENV_VARS = {
 
 let config = new Config();
 
-Object.keys(entries).forEach((item) => {
-  config.entry(item).add(entries[item]);
-});
+// Object.keys(entries).forEach((item) => {
+//   config.entry(item).add(entries[item]);
+// });
+
+config.entry('app').add('./src/index.ts');
+config.entry('global').add('./src/stylus/global.styl');
 
 config.output
   .path(resolve('../dist'))
   .pathinfo(false)
   .publicPath(publicPath)
-  .filename('script/[name].js')
-  .chunkFilename('script/[name].js')
+  .filename(jsname)
+  .chunkFilename(jsname)
   .end()
   .target('web')
   .stats('errors-only');
@@ -46,11 +52,9 @@ config.resolve.extensions
   .set('@util', resolve('../src/util'))
   .set('@http', resolve('../src/http'));
 
-// pages.forEach(item => {
-//     config
-//         .plugin(item.id)
-//         .use(HtmlWebpackPlugin, [item])
-// })
+pages.forEach((item) => {
+  config.plugin(item.id).use(HtmlWebpackPlugin, [item]);
+});
 
 config.plugin('html').use(HtmlWebpackPlugin, [
   {
@@ -65,13 +69,13 @@ config.plugin('copy').use(CopyWebpackPlugin, [
       {
         from: path.resolve(__dirname, '../public'),
         to: '.',
-        noErrorOnMissing: true,
+        // noErrorOnMissing: true,
       },
     ],
   },
 ]);
 
-config.plugin('fork-ts').use(ForkTsCheckerWebpackPlugin);
+config.plugin('fork-ts').use(ForkTsCheckerWebpackPlugin, [{ eslint: true }]);
 
 config.plugin('define').use(require('webpack').EnvironmentPlugin, [ENV_VARS]);
 
@@ -92,12 +96,6 @@ config.plugin('prefetch').use(PreloadWebpackPlugin, [
   },
 ]);
 
-config.plugin('friendly-error').use(FriendlyErrorsWebpackPlugin, [
-  {
-    quiet: true,
-  },
-]);
-
 config.module.noParse(/dayjs|jquery|mathjs/);
 /* eslint */
 if (enableEslint) {
@@ -109,9 +107,10 @@ if (enableEslint) {
     .end()
     .exclude.add(/node_modules/)
     .end()
-    .use('eslint-loader')
+    .use('eslint')
     .loader('eslint-loader');
 }
+
 /* ts */
 config.module
   .rule('ts')
@@ -120,10 +119,10 @@ config.module
   .end()
   .exclude.add(/node_modules/)
   .end()
-  .use('cache-loader')
+  .use('cache')
   .loader('cache-loader')
   .end()
-  .use('ts-loader')
+  .use('ts')
   .loader('ts-loader')
   .options({
     transpileOnly: true,
@@ -139,22 +138,22 @@ config.module
   .end()
   .exclude.add(/node_modules/)
   .end()
-  .use('cache-loader')
+  .use('cache')
   .loader('cache-loader');
 /* stylus */
 config.module
   .rule('stylus')
   .test(/\.(styl|css)(\?.*)?$/i)
-  .use('cache-loader')
+  .use('cache')
   .loader('cache-loader')
   .end()
-  .use('css-loader')
+  .use('css')
   .loader('css-loader')
   .end()
-  .use('postcss-loader')
+  .use('postcss')
   .loader('postcss-loader')
   .end()
-  .use('stylus-loader')
+  .use('stylus')
   .loader('stylus-loader')
   .options({
     sourceMap: true,
@@ -169,7 +168,7 @@ config.module
 config.module
   .rule('image')
   .test(/\.(png|jpe?g|gif|webp)(\?.*)?$/i)
-  .use('url-loader')
+  .use('url')
   .loader('url-loader')
   .options({
     limit: 2048,
@@ -177,7 +176,7 @@ config.module
       loader: 'file-loader',
       options: {
         esModule: false,
-        name: 'img/[name].[hash:8].[ext]',
+        name: 'img/' + mediaImgFontName,
       },
     },
   });
@@ -185,23 +184,23 @@ config.module
 config.module
   .rule('svg')
   .test(/\.(svg)(\?.*)?$/i)
-  .use('file-loader')
+  .use('file')
   .loader('file-loader')
   .options({
-    name: 'img/[name].[hash:8].[ext]',
+    name: 'img/' + mediaImgFontName,
   });
 /* media */
 config.module
   .rule('media')
   .test(/\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/i)
-  .use('url-loader')
+  .use('url')
   .loader('url-loader')
   .options({
     limit: 2048,
     fallback: {
       loader: 'file-loader',
       options: {
-        name: 'media/[name].[hash:8].[ext]',
+        name: 'media/' + mediaImgFontName,
       },
     },
   });
@@ -209,14 +208,14 @@ config.module
 config.module
   .rule('font')
   .test(/\.(woff2?|eot|ttf|otf)(\?.*)?$/i)
-  .use('url-loader')
+  .use('url')
   .loader('url-loader')
   .options({
     limit: 4096,
     fallback: {
       loader: 'file-loader',
       options: {
-        name: 'font/[name].[hash:8].[ext]',
+        name: 'font/' + mediaImgFontName,
       },
     },
   });
@@ -224,10 +223,10 @@ config.module
 config.module
   .rule('pug')
   .test(/\.pug(\?.*)?$/i)
-  .use('raw-loader')
+  .use('raw')
   .loader('raw-loader')
   .end()
-  .use('pug-plain-loader')
+  .use('pug')
   .loader('pug-plain-loader');
 
 // config.module
@@ -241,12 +240,13 @@ config.module
 
 config.module
   .rule('worker')
-  .test(/\.worker\.js(\?.*)?$/i)
-  .use('worker-loader')
+  .test(/\.worker\.(j|t)s(\?.*)?$/i)
+  .use('worker')
   .loader('worker-loader');
 
 // console.log(util.inspect(config.toConfig(), { showHidden: false, depth: null }))
 
 module.exports.resolve = resolve;
 module.exports.common = config;
-// module.exports = config.toConfig()
+module.exports.filename = filename;
+// module.exports = config.toConfig();

@@ -1,17 +1,19 @@
 {
   "compilerOptions": {
-    "incremental": true,
     "target": "ESNEXT",
     "module": "ESNext",
     "lib": ["DOM", "ES2015", "ES2015", "ESNext", "ScriptHost", "WebWorker"],
     "allowJs": true,
     "jsx": "preserve",
-    "sourceMap": true,
     "importHelpers": true,
     "downlevelIteration": true,
     "strict": true,
     "moduleResolution": "node",
     "baseUrl": "./",
+    "typeRoots": [
+      "node_modules/@types",
+       "typing"
+    ],
     "paths": {
       "@/*": ["./src/*"],
       "@img/*": ["./src/img/*"],
@@ -27,6 +29,5 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true
   },
-  "exclude": ["node_modules", "**/*.spec.ts"],
-  "include": ["src", "typings/*.d.ts", "mocker"]
+  "exclude": ["node_modules", "**/*.spec.ts","**/*.js"]
 }
