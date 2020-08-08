@@ -133,13 +133,6 @@
     "IE >= 9"
   ],
   "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,vue}": [
-      "npm run lint"
-    ]
+
   }
 }
