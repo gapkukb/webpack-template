@@ -1,0 +1,49 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "shared-node-browser": true,
+    "jquery": true,
+    "worker": true,
+    "es2020": true
+  },
+  "extends": ["alloy", "alloy/typescript"],
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "plugins": [],
+  "rules": {
+    "no-console": "off",
+    "no-unused-vars": "warn"
+  },
+  "settings": {
+    "import/parsers": {
+      // 使用 TypeScript parser
+      "@typescript-eslint/parser": [".ts", ".js", ".tsx", "jsx", ".json"]
+    },
+    "import/resolver": {
+      "node": {
+        // import 模块时，不写后缀将尝试导入的后缀，出现频率高的文件类型放前面
+        "extensions": [".ts", ".js", ".tsx", "jsx", ".json"]
+      },
+      "typescript": {
+        "directory": ["./tsconfig.json"]
+      }
+    }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.d.ts"],
+      "rules": {
+        "import/no-duplicates": "OFF"
+      }
+    },
+    {
+      "files": ["src/**/*.ts"],
+      "rules": {
+        "import/no-extraneous-dependencies": "OFF"
+      }
+    }
+  ]
+}

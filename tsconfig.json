@@ -1,17 +1,9 @@
 {
   "compilerOptions": {
-
     "incremental": true,
     "target": "ESNEXT",
     "module": "ESNext",
-    "lib": [
-      "DOM",
-      "ES2015",
-      "ES2015",
-      "ESNext",
-      "ScriptHost",
-      "WebWorker"
-    ],
+    "lib": ["DOM", "ES2015", "ES2015", "ESNext", "ScriptHost", "WebWorker"],
     "allowJs": true,
     "jsx": "preserve",
     "sourceMap": true,
@@ -21,30 +13,20 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "*":[
-        "*",
-        "./typings"
-      ],
-      "@/*": [
-        "src/*"
-      ],
-      "@images/*": [
-        "src/img/*"
-      ],
-      "@ts/*": [
-        "src/ts/*"
-      ]
+      "@/*": ["./src/*"],
+      "@img/*": ["./src/img/*"],
+      "@http/*": ["./src/http/*"],
+      "@util/*": ["./src/util/*"],
+      "@script/*": ["./src/script/*"]
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true
   },
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ],
-  "include": [
-    "src*",
-    "typings/*.d.ts"
-  ]
+  "exclude": ["node_modules", "**/*.spec.ts"],
+  "include": ["src", "typings/*.d.ts", "mocker"]
 }
