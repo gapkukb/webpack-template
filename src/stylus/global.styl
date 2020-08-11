@@ -1,2 +1,63 @@
-body
-  font-weight: bold;
+@import "./ie_hack.styl";
+:root
+  --red:#f00
+*
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+html
+  font-size: 40px;
+  font-family: "微软雅黑";
+
++block(row)
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  width: 100%;
+  background var(--red)
+
+  +modifier(center)
+    justify-content: center;
+
+  +modifier(left)
+    justify-content: left;
+
+  +modifier(right)
+    justify-content: flex-end;
+
+  +modifier(between)
+    justify-content: space-between;
+
+  +modifier(around)
+    justify-content: space-around;
+
+  +modifier(top)
+    align-items: flex-start;
+
+  +modifier(middle)
+    align-items: center;
+
+  +modifier(bottom)
+    align-items: flex-end;
+  +modifier(nowrap)
+    flex-wrap: nowrap
+
++block(col)
+  background-clip: content-box;
+
++block(gap)
+  margin-right: -4px;
+  margin-bottom: -4px;
+
+  +block(col)
+    padding-right: 4px;
+    padding-bottom: 4px;
+
+.pull-right
+  float: right;
+  margin-left: auto;
+
+.pull-left
+  float: left;
+  margin-left: auto;

@@ -1,25 +1,29 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const glob = require('glob');
-const path = require('path');
-const root = './src/view/';
-let entries = {},
-  pages = [];
-glob.sync(root + '**/*.{js,ts}').forEach((item) => {
-  let name = path
-    .relative(root, item)
-    .replace(path.sep, '_')
-    .replace(/\.(ts|js)$/, '');
-  let temp = item.replace(/\.ts|\.js$/, '.html');
-  entries[name] = item;
-  pages.push({
-    id: item,
-    template: temp,
-    title: '',
-    chunks: ['jquery', name],
-    filename: temp.replace('src/', ''),
-  });
-}, {});
+const globalLib = ['global'];
+const entries = [
+  {
+    entry: './src/view/a/index.ts',
+    entryName: 'a',
+    template: './src/view/a/index.html',
+    title: '开发环境',
+    filename: 'view/a/a.html',
+    chunks: ['a'].concat(globalLib),
+  },
+  {
+    entry: './src/view/b/index.ts',
+    entryName: 'b',
+    template: './src/view/b/index.html',
+    title: '开发环境',
+    filename: 'b.html',
+    chunks: ['b'].concat(globalLib),
+  },
+  {
+    entry: './src/view/c/index.ts',
+    entryName: 'c',
+    template: './src/view/c/index.html',
+    title: '开发环境',
+    filename: '.html',
+    chunks: ['c'].concat(globalLib),
+  },
+];
 
-// console.log(pages);
-module.exports.pages = pages;
-module.exports.entries = entries;
+module.exports = entries

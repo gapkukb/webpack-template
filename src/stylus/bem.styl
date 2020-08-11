@@ -26,7 +26,7 @@ group()
 modifier(mod, val = null)
   val = val && (modifier-delimiter + val);
   mod = modifier-prefix + mod;
-  mod = val ? (((((((mod + val))))))) : mod;
+  mod = val ? abs(mod + val) : mod;
   caller = called-from[0];
   group = "group";
 

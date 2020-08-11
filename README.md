@@ -1,3 +1,7 @@
+# css id规范
+编写样式禁止使用id选择器，id只用于js获取dom
+编写js禁止使用类名选择器，必须使用id选择器，如果批量选择元素，使用父级id进行事件代理。一是主要是因为防止由于改版，人员项目不熟悉从而导致类名变化，二是id选择器检索dom速度快
+
 # webpack-template
 
 > 有一点应该明确，"编程风格"的选择不应该基于个人爱好、熟悉程度、打字工作量等因素，而要考虑如何尽量使代码清晰易读、减少出错。你选择的，不是你喜欢的风格，而是一种能够清晰表达你的意图的风格。这一点，对于 Javascript 这种语法自由度很高、设计不完全成熟的语言尤其重要。
@@ -13,7 +17,7 @@ git config --global core.autocrlf input
 不允许提交包含 CRLF 换行符的文件
 git config --global core.safecrlf true
 
-# git 提交前自动格式化代码
+# git 提交前自动格式化代码(暂未开启)
 
 使用 “husky+lint-staged+prettier”组合在 git 提交前格式化代码。
 

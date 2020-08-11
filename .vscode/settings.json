@@ -5,13 +5,13 @@
   "editor.detectIndentation": false,
   "editor.smoothScrolling": true,
   "editor.minimap.renderCharacters": false,
-  "editor.formatOnSave": true,
+  // "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.minimap.showSlider": "always",
   "editor.minimap.maxColumn": 50,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "typescript.tsdk": "node_modules/typescript/lib" ,
+  "typescript.tsdk": "node_modules/typescript/lib",
   "files.eol": "\n",
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -91,13 +91,7 @@
   "eslint.alwaysShowStatus": true,
   /* 多项目eslint配置，vscode会匹配当前打开项目下的所有package.json，每个package.josn文件所在文件夹视为一个子项目 */
   "eslint.workingDirectories": [{ "pattern": "./packages/*/" }],
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue"],
   "eslint.options": {
     "extensions": [".js", ".jsx", ".vue", ".ts", ".tsx"]
   },
