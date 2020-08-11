@@ -9,7 +9,7 @@ const resolve = (...paths) => path.resolve(__dirname, ...paths);
 const jsname = (isProd = false) => `assets/script/[path][name]${isProd ? '.[contenthash:6]' : ''}.js`;
 const mediaImgFontName = '[name].[hash:6].[ext]';
 
-const publicPath = 'assets/';
+const publicPath = '';
 /* 开启eslint */
 const enableEslint = false;
 //环境变量
@@ -32,9 +32,9 @@ entries.forEach(item => {
 });
 
 config.output
-  .path(resolve('../'))
+  .path(resolve('../dist'))
   .pathinfo(false)
-  // .publicPath(publicPath)
+  .publicPath(publicPath)
   .filename(jsname())
   .chunkFilename(jsname())
   .end()

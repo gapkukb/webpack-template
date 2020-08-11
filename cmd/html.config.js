@@ -5,7 +5,7 @@ const entries = [
     entryName: 'a',
     template: './src/view/a/index.html',
     title: '开发环境',
-    filename: 'view/a/a.html',
+    filename: 'index.html',
     chunks: ['a'].concat(globalLib),
   },
   {
@@ -13,7 +13,7 @@ const entries = [
     entryName: 'b',
     template: './src/view/b/index.html',
     title: '开发环境',
-    filename: 'b.html',
+    filename: 'view/b/b.html',
     chunks: ['b'].concat(globalLib),
   },
   {
@@ -21,7 +21,7 @@ const entries = [
     entryName: 'c',
     template: './src/view/c/index.html',
     title: '开发环境',
-    filename: '.html',
+    filename: 'view/c/c.html',
     chunks: ['c'].concat(globalLib),
   },
 ];

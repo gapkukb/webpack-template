@@ -28,7 +28,7 @@ common.devtool('eval-source-map');
 
 common.devServer
   .port(8080)
-  .contentBase(path.join(__dirname, 'assets'))
+  // .contentBase("../dist")
   .hot(true)
   .overlay(true)
   .clientLogLevel('error')

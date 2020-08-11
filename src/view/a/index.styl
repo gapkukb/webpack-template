@@ -1,0 +1,27 @@
++layout(header)
+  +element(tab)
+    border-radius: $border-radius;
+    background-color: rgba(255, 255, 255, 0.025);
+    padding $size-sm
+    height 100px
++el(button)
+  background-image: linear-gradient(to right,#E1B47A, #E3CFAA);
+  color $gradient-text-color
+
++el(table)
+  table-layout: fixed
+  background-color: rgba(255, 255, 255, 0.025);
+  th
+    padding $size-lg 0  $size-md $size-sm
+  td
+    padding-bottom $size-md
+    padding-left $size-sm
+
+
++el(separate)
+  width 2em
+  height 3px
+  background-color #D7B07E
+  margin-top $size-xs
+  margin-bottom $size-md
+  border-radius 999px
