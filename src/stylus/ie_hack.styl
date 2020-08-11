@@ -1,13 +1,13 @@
 $vertical-align(prop)
   +modifier(prop)
     &>
-      +block(col)
+      +namespace(col)
         vertical-align: prop;
 
 unquote("@media screen and (min-width:0\0) and (min-resolution: .001dpcm) {");
 
 // for ie9
-+block(row)
++namespace(row)
   width: 100%;
   font-size: 0;
 
@@ -47,7 +47,7 @@ unquote("@media screen and (min-width:0\0) and (min-resolution: .001dpcm) {");
   $vertical-align(middle);
   $vertical-align(bottom);
 
-+block(col)
++namespace(col)
   display: inline-block;
   text-align: left;
   font-size: 1rem;

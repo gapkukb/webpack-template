@@ -1,14 +1,26 @@
-namespace ?= "ui-";
+_namespace ?= "ui-";
 element-prefix ?= "__";
 modifier-prefix ?= "--";
-modifier-delimiter ?= "_";
+modifier-delimiter ?= "-";
 group-store = ();
 
 str()
   join("", arguments);
 
 block(name)
-  .{namespace + name}
+  .{name}
+    {block};
+
+namespace(name)
+  .{_namespace + name}
+    {block};
+
+layout(name)
+  .layout-{name}
+    {block};
+
+el(name)
+  .el-{name}
     {block};
 
 group()
@@ -26,11 +38,12 @@ group()
 modifier(mod, val = null)
   val = val && (modifier-delimiter + val);
   mod = modifier-prefix + mod;
-  mod = val ? abs(mod + val) : mod;
+  temp = mod + val;
+  mod = val ? temp : mod;
   caller = called-from[0];
-  group = "group";
+  g = "group";
 
-  if (caller in group)
+  if (caller in g)
     level = length(called-from);
     mod = str("&", mod);
 
@@ -47,9 +60,9 @@ element(ele)
   caller = called-from[0];
   gcaller = called-from[1];
   callerPool = "element" "modifier";
-  group = "group";
+  g = "group";
 
-  if (caller in group)
+  if (caller in g)
     level = length(called-from);
 
     if (gcaller in callerPool)

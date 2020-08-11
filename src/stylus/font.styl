@@ -1,0 +1,105 @@
+$text-decoration = {
+    under: under-line,
+    over: over-line,
+    through: line-through
+}
+
++namespace(font)
+    for item in 0...$max-font-size + 1
+        if (item == 0 || (even(item) && (item > 11)))
+            +modifier(item)
+                font-size: item * 1px
+
+    for item in lighter normal bolder
+        +modifier(item)
+            font-weight: item
+
++namespace(text)
+    for item in left right center justify
+        +modifier(item)
+            text-align: item
+
+    +modifier(ellipsis)
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
+
+    for item in 2...3
+        +modifier(ellipsis, item)
+            @supports (-webkit-line-clamp: 1)
+                display: -webkit-box
+                -webkit-box-orient: vertical
+                -webkit-line-clamp: item
+                overflow: hidden
+
+            @supports not (-webkit-line-clamp: 1)
+                box-sizing: content-box
+                height: item * 1em * $body-line-height
+                overflow: hidden
+                position: relative
+
+                &:after
+                    content: '...'
+                    position: absolute
+                    bottom: 0
+                    right: 0
+                    padding-right: 4px
+                    background-color: inherit
+
+    for $k, $v in $text-decoration
+        +modifier($k)
+            text-decoration: $v
+
+    +modifier(nowrap)
+        white-space: nowrap
+
+    +modifier(break, word)
+        word-break: break-word
+
+    +modifier(break, all)
+        word-break: break-all
+
++namespace(text)
+    for item in top bottom middle baseline sup super
+        +modifier(item)
+            vertical-align: item
+
+.font--title
+    font-family: Georgia, Cambria, 'Times New Roman', Times, serif
+
+.font--code, pre
+    font-family: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace
+
+
+
+h1, .h1
+    font-size: 38px
+    line-height: 1.23
+
+h2, .h2
+    font-size: 30px
+    line-height: 1.35
+
+h3, .h3
+    font-size: 24px
+    line-height: 1.23
+
+h4, .h4
+    font-size: 20px
+    line-height: 1.4
+
+h5, .h5
+    font-size: 16px
+    line-height: 1.4
+
+h6, .h6
+    opacity: 0.8
+    font-size: 12px
+
+.char--half:before
+    content: '\2002'
+    speak: none
+
+.char--full:before
+    content: '\2003'
+    speak: none

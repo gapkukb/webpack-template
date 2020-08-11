@@ -1,1 +1,18 @@
-$color = #000aaa;
+$green = #3D95A4;
+$gradient = "#E1B47A #E3CFAA";
+$gradient-text-color = #5D3404;
+$grid-count ?= 24;
+$max-font-size ?= 48;
+$border-radius ?= 2px;
+$sizes = xxs xs sm md lg xl;
+
+for item, index in $sizes
+  index=index||0.5
+  define("$size-" + item, index * 8px);
+
+// body
+$body-font-size ?= 14px;
+$body-background-color ?= #16151A;
+$body-color ?= #E5E5E7;
+$body-line-height ?= 1.5;
+$body-font-family ?= system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
