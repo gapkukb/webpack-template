@@ -1,0 +1,45 @@
++namespace(switch)
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  width: 48px;
+  height: 24px;
+  cursor: pointer;
+
+  +element(thumb)
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 99px;
+    background-color: $color-gray-2;
+
+    &:before
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 99px;
+      background-color: $color-white;
+      box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.5);
+      content: "";
+      transition: all 0.4s;
+
+    ../
+      input
+        display: none;
+
+        &:checked+^[1]
+          background-color: $color-white;
+
+          &:before
+            left: 48px - 24px;
+            background-color: $color-green;
+
++namespace(checkbox)
+  width 16px
+  height 16px
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M19 0h-14c-2.762 0-5 2.239-5 5v14c0 2.761 2.238 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-8.959 17l-4.5-4.319 1.395-1.435 3.08 2.937 7.021-7.183 1.422 1.409-8.418 8.591z'/%3E%3C/svg%3E");
+  background-size cover

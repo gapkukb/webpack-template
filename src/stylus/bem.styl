@@ -23,14 +23,15 @@ el(name)
   .el-{name}
     {block};
 
-group()
+group(parallel = false)
   caller = called-from[0];
   level = length(called-from) + 1;
   elements = group-store[level];
   selector = ();
   parent = null;
+  sep = parallel ? "" : ",";
 
-  {join(",", elements)}
+  {join(sep, elements)}
     {block};
 
   group-store[level] = null;

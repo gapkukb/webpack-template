@@ -1,18 +1,62 @@
-$green = #3D95A4;
-$gradient = "#E1B47A #E3CFAA";
-$gradient-text-color = #5D3404;
 $grid-count ?= 24;
-$max-font-size ?= 48;
-$border-radius ?= 2px;
-$sizes = xxs xs sm md lg xl;
+$radius ?= 4px;
+// size
+$sizes ?= xxs xs sm md lg xl;
 
 for item, index in $sizes
-  index=index||0.5
+  index ?= index || 0.5;
   define("$size-" + item, index * 8px);
 
-// body
-$body-font-size ?= 14px;
-$body-background-color ?= #16151A;
-$body-color ?= #E5E5E7;
-$body-line-height ?= 1.5;
-$body-font-family ?= system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+// point-break
+$screen-sm ?= 1366px;
+$screen-md ?= 1600px;
+$screen-lg ?= 1920px;
+
+// colors
+$color-gold-deep ?= #E2B271;
+$color-gold-light ?= #F6D99D;
+$color-gold ?= #f3b867;
+$color-green ?= #08d26b;
+$color-yellow ?= #fcb80a;
+$color-red ?= #f3614b;
+$color-blue ?= #0b9cfe;
+$color-pink ?= #ff4676;
+$color-gray-1 ?= #e1e1e1;
+$color-gray-2 ?= #a8a8aa;
+$color-gray-3 ?= #6f6f71;
+$color-brown ?= #633100;
+$color-bg-1 ?= #1e1e24;
+$color-bg-2 ?= rgba(30,30,36,0.4);
+$color-bg-3 ?= #2a2a32;
+$color-bg-4 ?= #32323c;
+$color-bg-5 ?= #2e2e31;
+$color-bg-6 ?= #252528;
+$color-bg-7 ?= #36363f;
+$color-white ?= #ffffff;
+$color-black ?= #000000;
+$color-body-bg ?=  #16151A
+$color-body-fg ?=  $color-gray-2
+// font
+$font-size-small ?= 12px;
+$font-size-main ?= 16px;
+$font-size-h6 ?= 14px;
+$font-size-h5 ?= 18px;
+$font-size-h4 ?= 20px;
+$font-size-h3 ?= 24px;
+$font-size-h2 ?= 32px;
+$font-size-h1 ?= 40px;
+$font-family ?= "Helvetica Neue", Helvetica, "PingFang SC", "Hira Sans GB", "Microsoft YaHei", "微软雅黑", "Arial", sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+$line-height ?= 1.5;
+$base-font-size ?= 14px
+//button
+$button-mini-height ?= 20px
+$button-height ?= 40px
+$button-small-height ?= 30px
+$button-large-height ?= 48px
+//table
+$table-header-bgc ?= $color-bg-2
+$table-bgc ?= $color-bg-2
+$table-hover-color ?= $color-bg-4
+$table-striped-color ?= $color-bg-3
+$table-actived-color ?= $color-bg-3
+//checkbox

@@ -14,9 +14,9 @@ html
 body
   overflow: hidden;
   width: 100vw;
-  background-color: $body-background-color;
-  color: $body-color;
-  font: $body-font-size / $body-line-height $body-font-family;
+  background-color: $color-body-bg;
+  color: $color-body-fg;
+  font: $base-font-size / $line-height $font-family;
   -webkit-font-smoothing: subpixel-antialiased;
 
 :root
@@ -33,10 +33,15 @@ h4
 h5
 h6
   font-size: 1em;
+  font-weight normal
 
 ol
 ul
   list-style: none;
+
+i
+em
+  font-style: normal;
 
 pre
 code
@@ -107,10 +112,11 @@ progress
   -webkit-appearance: none; /* 1 */
 
 table
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
   font-size: 100%;
-  border-collapse: collapse
-  border-spacing: 0
-  width: 100%
+
 th
   text-align: inherit;
 
@@ -118,3 +124,28 @@ img
 svg
   margin-top: -0.12em;
   vertical-align: middle;
+
+[disabled]
+.disabled
+  filter: grayscale(1);
+  filter: gray; /* IE6-9 */
+  pointer-events: none;
+
+::-webkit-scrollbar
+  width:10px;
+  height:10px;
+::-webkit-scrollbar-button
+  background:$color-bg-7
+  display none
+
+::-webkit-scrollbar-track,::-webkit-scrollbar-track-piece
+    background:$color-gray-7;
+
+::-webkit-scrollbar-thumb
+  background:$color-bg-7;
+  border-radius:4px;
+  &:hover
+    background-color:lighten($color-bg-7,10);
+
+
+

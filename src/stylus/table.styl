@@ -1,228 +1,52 @@
-$table-sticky
-  position: -webkit-sticky
-  position: -moz-sticky
-  position: -ms-sticky
-  position: -o-sticky
-  position: sticky
++namespace(table)
+  border-color: $color-bg-6;
+  border-radius: $radius;
+  background-color: $table-bgc;
+  text-align: center;
 
-$border = 1px solid $table-border-color
+  thead
+    background-color: $table-header-bgc;
+    color: $color-gray-1;
 
-$sticky
-  content: ''
-  position: absolute
-  height: 100%
-  border-left: $border
-  top: 0
+  tbody
+    color: $color-gray-2;
 
-$sticky-before
-  @extend $sticky
-  right: -1px
+  td
+  th
+    padding: $size-sm $size-xxs;
+    overflow hidden
+    white-space nowrap
+    text-overflow ellipsis
+    border-color: $color-bg-6;
+  tbody
+    tr
+      transition: background-color 0.4s;
 
-$sticky-after
-  @extend $sticky
-  left: -1px
+      &:hover
+        background-color: $table-hover-color;
 
-+block('table')
-
-  >thead th
-    background-color: $table-header-bgc
-    font-size: $table-header-font-size if ($table-header-font-size == true)
-
-  >tfoot th
-    font-size: $table-footer-font-size if ($table-header-font-size == true)
-    background-color: $table-footer-bgc
-
-  td, th
-    padding: $table-cell-padding 0
-    transition: background-color 0.3s ease-out
-    border-color: $table-border-color
-
-  caption
-    $props: $table-title
-
-  ../
-    .caption
-      @extend .table caption
-
-  tbody tr:hover td
-    background-color: $table-hover-color !important
-
-  +modifier(outline)
-    border: $border
-    width: 100%
-    overflow: auto
-
-  +modifier(sticky, top)
+  +modifier(mini)
+    td
     th
-      @extend $table-sticky
-
-    thead th
-      top: 0px
-
-  +modifier(sticky, bottom)
-    th
-      @extend $table-sticky
-
-    tfoot th
-      bottom: 0px
-
-  +modifier(sticky, left)
-    td:first-child
-      @extend $table-sticky
-      background-color: $table-bg
-      left: 0px
-
-      &:after
-        @extend $sticky-before
-
-    th:first-child
-      left: 0px
-      z-index: 2
-
-      &:after
-        @extend $sticky-before
-
-  +modifier(sticky, right)
-    td:last-child
-      @extend $table-sticky
-      background-color: $table-bg
-      right: 0px
-
-      &:before
-        @extend $sticky-after
-
-    th:last-child
-      right: 0px
-      z-index: 2
-
-      &:after
-        @extend $sticky-after
-
-  +modifier(sticky, borderless)
-    td, th
-      &:before, &:after
-        content: none !important
+      padding: $size-xs $size-xxs;
+      font-size: 0.8em;
 
   +modifier(fixed)
-    table-layout: fixed
+    table-layout: fixed;
 
   +modifier(striped)
-    tbody tr:nth-child(2n)>td
-      background-color: $table-striped-color
+    >tbody>tr:nth-child(2n)
+      background-color: $table-striped-color;
 
-  +modifier(striped, col)
-    td:nth-child(2n)
-      background-color: $table-striped-color
+  +element(actived)
+    background-color: $table-actived-color;
 
-  +modifier(dense)
-    td, th
-      padding: ($table-cell-padding / 2) 0
+  +element(header)
+    background-color: $table-header-bgc;
 
-  +element(row)
-    +modifier(active)
-      background-color: $table-row-active-color
-
-  +element(filter)
-    position: relative
-    cursor: pointer
-    background-clip: padding-box
-
-  +element(icon)
-    position: absolute
-    right: 0px
-    top: 0px
-    cursor: pointer
-    padding: 6px
-    transition: filter 0.2s
-    height: 100%
-    overflow: visible
-    background-color: $table-header-bgc
-
-    &:hover, &:focus-within
-      // background-color: rgba(0, 0, 0, 0.2)
-      filter: brightness(95%)
-
-    /* focus-within 元素和子元素获得焦点触发 */
-    &:focus-within
-      +element(search)
-        display: block
-
-  +modifier(resizable)
-    & th
-      padding: 0
-      height: 40px
-      white-space: nowrap
-      -webkit-position: sticky
-      top: 0px
-      overflow: hidden auto
-      resize: horizontal
-      text-overflow: ellipsis
-
-  // +element(resize-bar)
-  // min-width: 4px
-  // height: 40px
-  // resize: horizontal
-  // overflow: hidden scroll
-  // // float right
-  // // opacity 0
-  // &::-webkit-scrollbar,&::-webkit-resizer
-  // width: 40px
-  // height: 40px
-  // cursor: ew-resize
-  // cursor: col-resize
-  +element(title)
-    position: absolute
-    left: 0px
-    top: 0px
-    bottom: 0px
-    right: 0px
-    pointer-events: none
-    margin: auto
-
-  +element(search)
-    position: absolute
-    right: 0px
-    top: 100%
-    background-color: #fff
-    padding: 4px 10px
-    display: none
-
-  +element(active)
-    color: $blue['700']
-
-.e-table
-  display: flex
-  border-color: #2b2c32
-  background-color: #1e1d24
-  border-right: 1px solid #2b2c32
-  border-bottom: 1px solid #2b2c32
-
-  &.active
-    transition: transform 1s
-    transform: translateX(-24px)
-
-.e-cell
-  width: 24px
-  height: @width
-  border-left: 1px solid #2b2c32
-  border-top: 1px solid #2b2c32
-  background-color: #1e1d24
-.z-win
-  display: block
-  width: 16px
-  height: 16px
-  border-radius: 50%
-  border: 2px solid #c8325f
-
-.x-win
-  display: block
-  width: 16px
-  height: 16px
-  border-radius: 50%
-  border: 2px solid #178fe2
-
-@media (max-width: 600px)
-  .e-table
-    th, td
-      &:nth-child(-n+3), &:nth-last-child(-n+3)
-        display: none
++namespace(table-box)
+  overflow auto
+  white-space nowrap !important
+  >table
+    width auto
+    min-width 100%

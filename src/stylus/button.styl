@@ -1,87 +1,218 @@
+body
+  font: $base-font-size / $line-height $font-family;
+
+colorful-botton(key, value)
+  +modifier(key)
+    border-color: value;
+    background-color: value;
+    color: $color-white;
+
+    &:focus
+      box-shadow: 0 0 0 4px rgba(value ? value : currentColor, 0.4);
+
+plain-botton(key, value)
+  +modifier(key, plain)
+    border-color: value;
+    background: linear-gradient(to right, value 50%, transparent 50%);
+    background-position: right bottom;
+    background-size: 200% 100%;
+    color: value;
+    transition: all 0.5s ease;
+
+    &:focus
+      box-shadow: 0 0 0 4px rgba(value ? value : currentColor, 0.4);
+
+    &:hover
+      background-position: left bottom;
+      color: $color-white;
+      opacity: 1;
+
 +namespace(button)
-    padding: 0.2em 0.8em
-    border-radius: $border-radius
-    text-transform: uppercase
-    transition: opacity 0.2s
-    cursor: pointer
-    // line-height: 1
-    user-select: none
+  padding: 0 1em;
+  min-width: $button-height;
+  height: $button-height;
+  border: 1px solid $color-bg-6;
+  border-radius: $radius;
+  background-color: $color-bg-1;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s;
+  user-select: none;
 
-    +modifier(small)
-        font-size: 12px
+  &:hover
+  &:active
+    position: relative;
+    z-index: 2;
+    opacity: 0.85;
 
-    +modifier(large)
-        font-size: 16px
+  +modifier(mini)
+    padding: 0 0.6em;
+    min-width: $button-mini-height;
+    height: $button-mini-height;
+    font-size: 12px;
+
+  +modifier(small)
+    min-width: $button-small-height;
+    height: $button-small-height;
+    font-size: 12px;
+
+  +modifier(large)
+    min-width: $button-large-height;
+    height: $button-large-height;
+    font-size: 16px;
+
+  +group(true)
+    modifier(large);
+    modifier("icon");
+    font-size: 28px;
+
+  +group(true)
+    modifier(small);
+    modifier("icon");
+    font-size: 18px;
+
+  +modifier("icon")
+    padding: 0;
+    border-radius: 50%;
+    font-size: 22px;
+
+  +modifier("round")
+    border-radius: 999px;
+
+  +modifier("plain")
+    background: none !important;
+
+  $types = {
+    primary: $color-blue,
+    success: $color-green,
+    danger: $color-pink,
+    warning: $color-yellow,
+    gold: $color-gold,
+    info: $color-brown,
+    dark: $color-black
+  };
+
+  +modifier(normal)
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFsAAAAJCAYAAABdcFBlAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADqSURBVEhL7dDZPgJhHAZgt0xZsiVC1oqI0k1I9n0rka0Fp00xNDVSnL5+7/eNO3D4P3hu4Okor3einOxSjKQLxga5YaTcqKS6UdmkHm2LelHdpj5Ud8iDV9rt1/YG8Eb7g44hmAc0DPOQvDCPaATvdOzTTkbx8ed0TKmd+bXzcccErAuahHVJAVjpAOrpKdQzNK00rma07KxiZ+dgX9M87BsKws4F8ZkLabdhpXlHC2je0yK+6CGiPS6hRfllRxStAq2gXaRVtEsUwzc9xbXnNfzQSwKSLdmSLdmSLdmSLdmSLdmS/d/ZCfwCNLpJuT9B3PsAAAAASUVORK5CYII=");
+    background-size: contain;
+    color: $color-brown;
+
+  +modifier(borderless)
+    border-color: transparent;
+
+  for item, value in $types
+    colorful-botton(item, value);
+    plain-botton(item, value);
 
 +namespace(button-group)
-    display: inline-flex
-    overflow: hidden
-    border-radius: $global-border-radius
-    // -webkit-mask-image: -webkit-radial-gradient(white, black);
-    transform: translateZ(0)
+  display: inline-flex;
+  overflow: hidden;
+  border-radius: $radius;
+  // -webkit-mask-image: -webkit-radial-gradient(white, black);
+  transform: translateZ(0);
 
-    >.button
-        border-radius: 0
+  >
+    +namespace(button)
+      border-radius: 0;
 
 +namespace(dropdown)
-    position: relative
+  position: relative;
+  display: inline-block;
+  overflow: visible;
+  text-align: center;
+  padding-bottom $size-xxs;
 
-    &:after
-        content: ''
-        display: inline-namespace
-        border: 0.4em solid transparent
-        transform: translateY(0.2em)
-        border-top-color: currentColor
+  +element(title)
+    border-color: transparent;
+    background-color: $color-bg-3;
 
-    +modifier(body)
-        display: none
-        position: absolute
-        border-radius: $global-border-radius
-        border: $border
-        color: inherit
-        line-height: 2em
-        background-color: inherit
-        z-index 2
-        max-height 100px
-        overflow hidden auto
-        overscroll-behavior: contain;
+  +element(body)
+    position: absolute;
+    z-index: 2;
+    display: none;
+    overflow: auto;
+    padding-top: $size-xs;
+    max-height: 200px;
+    border-radius: $radius;
+    background-color: $color-bg-3;
+    white-space: nowrap;
+    overscroll-behavior: contain;
 
-        ^[0]:focus>&
-            display: namespace
+    ^[0]:hover>&
+      display: block;
 
-    +modifier(top, left)
-        bottom: 100%
-        left: 0px
+    +modifier(tf)
+      bottom: 100%;
+      left: 0;
 
-    +modifier(top, right)
-        bottom: 100%
-        right: 0px
+    +modifier(tr)
+      right: 0;
+      bottom: 100%;
 
-    +modifier(btm, left)
-        top: 100%
-        left: 0px
+    +modifier(bl)
+      top: 100%;
+      left: 0;
 
-    +modifier(btm, right)
-        top: 100%
-        right: 0px
+    +modifier(br)
+      top: 100%;
+      right: 0;
 
-    +modifier(item)
-        position: relative
-        display namespace
-        cursor pointer
-        &:after
-            content: ''
-            position: absolute
-            pointer-events: none
-            left: 0px
-            right: 0px
-            top: 0px
-            bottom: 0px
-            display none
-            background-color rgba(0, 0, 0, 0.1)
+  +element("item")
+    position: relative;
+    padding: $size-xs;
+    cursor: pointer;
+    transition: all 0.3s;
 
-        &-active:after,&:hover:after
-            display namespace
-:checked~:after
-    display namespace !important
+    // &:first-child
+      // border-top: $size-xs solid $color-bg-3;
 
+    &:hover
+    &.active
+      background-color: $color-bg-7;
+      color $color-gold
+
+@font-face
+  font-family: "icon";
+  src: url("data:application/x-font-woff;charset=utf-8;base64,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") format("woff");
+
+.icon
+  font-style: normal;
+  font-family: "icon" !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+.icon-password:before
+  content: "\e697";
+
+.icon-ziyuan:before
+  content: "\e630";
+
+.icon-qq:before
+  content: "\e60e";
+
+.icon-user:before
+  content: "\e600";
+
+.icon-twitter:before
+  content: "\e659";
+
+.icon-github:before
+  content: "\e601";
+
+.icon-google:before
+  content: "\e619";
+
+.icon-facebook:before
+  content: "\e602";
+
+.icon-wechat:before
+  content: "\e603";
+
+.icon-weibo:before
+  content: "\e604";
+
+.icon:not(:only-child):first-child
+  margin-right: $size-xs;
+
+.icon:not(:only-child):last-child
+  margin-left: $size-xs;

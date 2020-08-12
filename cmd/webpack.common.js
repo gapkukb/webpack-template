@@ -24,13 +24,16 @@ const ENV_VARS = {
 
 let config = new Config();
 //entries
-config.entry('global').add('./src/stylus/global.styl');
+// config.entry('global').add('./src/stylus/global.styl');
+config.entry('global').add('./src/index.ts');
 
-entries.forEach(item => {
-  config.entry(item.entryName).add(item.entry);
-  config.plugin(item.entryName).use(HtmlWebpackPlugin, [item]);
-});
-
+// entries.forEach(item => {
+//   config.entry(item.entryName).add(item.entry);
+//   config.plugin(item.entryName).use(HtmlWebpackPlugin, [item]);
+// });
+config.plugin('html').use(HtmlWebpackPlugin, [{
+  template:'./src/index.html'
+}]);
 config.output
   .path(resolve('../dist'))
   .pathinfo(false)

@@ -52,12 +52,25 @@ unquote("@media screen and (min-width:0\0) and (min-resolution: .001dpcm) {");
   text-align: left;
   font-size: 1rem;
 
+[disabled],.disabled
+  background #eee
+  border-color #eee
+  color #000
+
 unquote("}");
+unquote("@media screen\0 {");
+
+unquote("}");
+
+unquote("@media screen (-webkit-min-device-pixel-ratio: 0) {");
+//for not webkit
+body
+  background-color red !important
+unquote("}");
+
+
 /*
 //以下暂时没用到
-unquote("@media screen\0 {");
- //for IE 8,9,10,11
-unquote("}");
 
 unquote("@media \0screen {");
  //for IE 8

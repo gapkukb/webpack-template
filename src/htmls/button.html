@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="<%= process.env.BASE_URL %>favicon.ico" type="image/x-icon" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body style="padding:10px">
+    <button class="ui-button">普通按钮</button>
+    <button class="ui-button">普通按钮</button>
+    <button class="ui-button"><i class="icon icon-user"></i><i>普通按钮</i></button>
+    <button class="ui-button"><i>普通按钮</i><i class="icon icon-user"></i></button>
+    <button class="ui-button"><i class="icon icon-user"></i><i>普通按钮</i><i class="icon icon-user"></i></button>
+    <h6>按钮颜色</h6>
+    <button class="ui-button ui-button--primary">.ui-button--primary</button>
+    <button class="ui-button ui-button--success">.ui-button--success</button>
+    <button class="ui-button ui-button--danger">.ui-button--danger</button>
+    <button class="ui-button ui-button--gold">.ui-button--gold</button>
+    <button class="ui-button ui-button--warning">.ui-button--warning</button>
+    <button class="ui-button ui-button--dark">.ui-button--dark</button>
+    <button class="ui-button ui-button--brown">.ui-button--brown</button>
+    <button class="ui-button ui-button--normal">.ui-button--normal</button>
+    <h6>大小</h6>
+    <button class="ui-button ui-button--primary ui-button--mini">.ui-button--mini</button>
+    <button class="ui-button ui-button--primary ui-button--small">.ui-button--small</button>
+    <button class="ui-button ui-button--primary">普通按钮</button>
+    <button class="ui-button ui-button--primary ui-button--large">.ui-button--large</button>
+    <h6>圆形.ui-button--round</h6>
+    <button class="ui-button ui-button--round ui-button--primary ui-button--small">.ui-button--round</button>
+    <button class="ui-button ui-button--round ui-button--primary">.ui-button--round</button>
+    <button class="ui-button ui-button--round ui-button--primary ui-button--large">.ui-button--round</button>
+    <h6>带图标.ui-button--icon</h6>
+    <button class="ui-button ui-button--icon ui-button--primary ui-button--small"><i class="icon icon-user"></i></button>
+    <button class="ui-button ui-button--icon ui-button--primary"><i class="icon icon-user"></i></button>
+    <button class="ui-button ui-button--icon ui-button--primary ui-button--large"><i class="icon icon-user"></i></button>
+    <h6>镂空.ui-button-color-plain</h6>
+    <button disabled class="ui-button ui-button--primary-plain ui-button--small">.ui-button--primary-plain</button>
+    <button class="ui-button ui-button--danger-plain">.ui-button--danger-plain</button>
+    <button class="ui-button ui-button--warning-plain ui-button--large">.ui-button--warning-plain</button>
+    <h6>禁用去色 [disabled] .disabled</h6>
+    <button disabled class="ui-button ui-button--primary ui-button--small">.disbaled</button>
+    <button disabled class="ui-button ui-button--danger">[disabled]</button>
+    <button disabled class="ui-button ui-button--warning ui-button--large disabled-colorful">.disabled-colorful</button>
+    <h6>禁用保持颜色 .disabled-colorful</h6>
+    <button type="button" disabled="disabled" class="disabled ui-button disabled-colorful ui-button--primary ui-button--small"><span class="button--text">.disbaled</span></button>
+    <button type="button" disabled="disabled" class="disabled ui-button disabled-colorful ui-button--danger">[disabled]</button>
+    <button type="button" disabled="disabled" class="disabled ui-button disabled-colorful ui-button--warning ui-button--large">.disabled-colorful</button>
+    <input type="button" disabled class="ui-button" value="你好">
+    <h6>按钮组 .ui-button-group</h6>
+    <div class="ui-button-group">
+      <button type="button" class="ui-button ui-button--primary"><span class="button--text">.disbaled</span></button>
+      <button type="button" class="ui-button ui-button--danger">[disabled]</button>
+      <button type="button" class="ui-button ui-button--warning">.disabled-colorful</button>
+    </div>
+    <h6>下拉按钮 .ui-button ui-dropdown</h6>
+
+    <div class="ui-dropdown">
+      <button class="ui-button ui-dropdown__title">
+        <span>下拉头</span>
+        <i class="icon icon-user"></i>
+      </button>
+      <div class="ui-dropdown__body ui-dropdown__body--bl">
+        <div class="ui-dropdown__item">选项一选项一选项一</div>
+        <div class="ui-dropdown__item">选项一</div>
+        <div class="ui-dropdown__item">选项一</div>
+        <div class="ui-dropdown__item">选项一</div>
+        <div class="ui-dropdown__item">选项一</div>
+        <div class="ui-dropdown__item">选项一</div>
+      </div>
+    </div>
+
+
+
+  </body>
+</html>

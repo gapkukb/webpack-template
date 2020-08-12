@@ -27,7 +27,7 @@ common.mode('development');
 common.devtool('eval-source-map');
 
 common.devServer
-  .port(8080)
+  // .port(8080)
   // .contentBase("../dist")
   .hot(true)
   .overlay(true)

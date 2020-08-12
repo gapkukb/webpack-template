@@ -119,3 +119,11 @@ $spaceing(mg, margin);
   display: table;
   clear: both;
   content: "";
+
+for point in sm md lg
+  @media (max-width:lookup('$screen-'+point))
+    +namespace(col)
+      for item in 1 .. $grid-count
+        +modifier(point,item)
+          width: tofixed(item);
+
