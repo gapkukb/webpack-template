@@ -51,10 +51,10 @@ config.resolve.extensions
   .set('@script', resolve('../src/script'))
   .set('@util', resolve('../src/util'))
   .set('@stylus', resolve('../src/stylus'))
-  .set("@types": resolve("../src/types"))
-  .set("@i18n": resolve("../src/i18n"))
-  .set("@include": resolve("../src/template/include"))
-  .set('@http': resolve('../src/http'));
+  .set("@types", resolve("../src/types"))
+  .set("@i18n", resolve("../src/i18n"))
+  .set("@include", resolve("../src/template/include"))
+  .set('@http', resolve('../src/http'));
 
 config.plugin('copy').use(CopyWebpackPlugin, [
   {
@@ -68,7 +68,6 @@ config.plugin('copy').use(CopyWebpackPlugin, [
 ]);
 
 config.plugin('define').use(require('webpack').EnvironmentPlugin, [ENV_VARS]);
-// config.plugin('hard-cache').use(require('hard-source-webpack-plugin'), [ENV_VARS]);
 config.plugin('MiniCssExtractPlugin').use(MiniCssExtractPlugin, [
   {
     filename: cssname,

@@ -28,7 +28,6 @@ const getConfig = env => ({
       }
     ],
     "babel-plugin-dynamic-import-polyfill",
-    "@babel/plugin-syntax-bigint",
     "@babel/plugin-proposal-class-properties"
   ]
 })

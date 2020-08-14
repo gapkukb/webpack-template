@@ -21,7 +21,8 @@
     "sourceMap": false,
     "plugins": {
       "postcss-custom-properties": {},
-      "autoprefixer": {}
+      "autoprefixer": {},
+      "cssnano": {}
     }
   },
   "husky": {},
@@ -51,7 +52,6 @@
     "hard-source-webpack-plugin": "^0.13.1",
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.3.0",
-    "html-webpack-pug-plugin": "^2.0.0",
     "image-webpack-loader": "^6.0.0",
     "mini-css-extract-plugin": "^0.9.0",
     "mocker-api": "^2.3.0",
@@ -60,9 +60,7 @@
     "preload-webpack-plugin": "^3.0.0-beta.4",
     "prettier": "^2.0.5",
     "pug": "^3.0.0",
-    "pug-html-loader": "^1.1.5",
     "pug-plain-loader": "^1.0.0",
-    "raw-loader": "^4.0.1",
     "style-loader": "^1.2.1",
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
