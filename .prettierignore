@@ -1,9 +1,0 @@
-/node_modules
-/dist
-/src/lib
-package.json
-babel.config.json
-tsconfig.json
-README.MD
-**/*.min.js
-**/*.min.css
