@@ -1,0 +1,85 @@
+$vertical-align(prop)
+  +modifier(prop)
+    &>
+      +namespace(col)
+        vertical-align: prop;
+
+unquote("@media screen and (min-width:0\0) and (min-resolution: .001dpcm) {");
+
+// for ie9
++namespace(row)
+  width: 100%;
+  font-size: 0;
+
+  // &:after
+  // display: inline-block;
+  // content: "";
+  // height 100%
+  +modifier(center)
+    text-align: center;
+    // text-align-last: center;
+
+  +modifier(left)
+    text-align: left;
+    // text-align-last: left;
+
+  +modifier(right)
+    text-align: right;
+    // text-align-last: right;
+
+  +group()
+    modifier(between);
+    modifier(around);
+    text-align: justify;
+    text-align-last: right;
+    text-justify: distribute-all-lines;
+
+  +modifier(around)
+    &:before
+    &:after
+      display: inline-block;
+      content: "";
+
+  +modifier(nowrap)
+    white-space: nowrap;
+
+  $vertical-align(top);
+  $vertical-align(middle);
+  $vertical-align(bottom);
+
++namespace(col)
+  display: inline-block;
+  text-align: left;
+  font-size: 1rem;
+
+unquote("}");
+/*
+//以下暂时没用到
+unquote("@media screen\0 {");
+ //for IE 8,9,10,11
+unquote("}");
+
+unquote("@media \0screen {");
+ //for IE 8
+unquote("}");
+
+unquote("@media screen and (min-width:0\0) and (min-resolution: +72dpi) {");
+// for IE 9,10,11
+unquote("}");
+unquote("@media screen and (-ms-high-contrast:active), (-ms-high-contrast:none) {");
+// for IE 10,11
+unquote("}");
+
+unquote("@media screen and (min-width:0\0) {");
+// for IE 9,10
+unquote("}");
+
+unquote("@media all and (-ms-high-contrast: none), (-ms-high-contrast: active){");
+// for IE10
+unquote("}");
+
+unquote("@media screen and (min-width:0\0) and (min-resolution: .001dpcm) { ");
+// only IE9 CSS
+unquote("}");
+
+ */

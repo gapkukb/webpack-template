@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="<%= process.env.BASE_URL %>favicon.ico" type="image/x-icon" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="stylesheet" href="css/ddd.css">
+    <link rel="stylesheet" href="/assets/css/test.css">
+  </head>
+
+  <body>
+    <div class="ui-page ui-pd--lg">
+      <div class="layout-header ui-row ui-gap--sm">
+        <div class="ui-col ui-col--6">
+          <div class="layout-header__tab ui-pd--sm">
+            <div class="ui-pd--bottom-sm ui-font--12">本周未结算洗码金额（USDT）</div>
+            <div class="ui-row ui-row--between ui-row--middle ui-font--16">
+              <div class="ui-col">1250.00</div>
+              <button class="ui-col ui-button el-button">一件结算</button>
+            </div>
+          </div>
+        </div>
+        <div class="ui-col ui-col--6">
+          <div class="layout-header__tab ui-pd--sm">
+            <div class="ui-pd--bottom-sm ui-font--12">本周可结算有效投注额</div>
+            <div class="ui-font--16">0.00000</div>
+          </div>
+        </div>
+        <div class="ui-col ui-col--6">
+          <div class="layout-header__tab ui-pd--sm">
+            <div class="ui-pd--bottom-sm ui-font--12">本周总有效投注额</div>
+            <div class="ui-font--16">0.00</div>
+          </div>
+        </div>
+        <div class="ui-col ui-col--6">
+          <div class="layout-header__tab ui-pd--sm">
+            <div class="ui-pd--bottom-sm ui-font--12">查看戏码优惠</div>
+            <div class="ui-font--16">图标</div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-body ui-mg--top-lg">
+        <table class="el-table">
+          <thead class="ui-text--left">
+            <th></th>
+            <th>未结算洗码金额</th>
+            <th>可结算有效投注额</th>
+            <th>当周总有效投注额</th>
+          </thead>
+          <tbody class="ui-font--16">
+            <tr>
+              <td>
+                <div>真人游戏</div>
+                <div class="ui-font--12">(洗码比列0.9%)</div>
+              </td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
+            </tr>
+            <tr>
+              <td>
+                <div>真人游戏</div>
+                <div class="ui-font--12">(洗码比列0.9%)</div>
+              </td>
+              <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="layout-footer ui-mg--top-lg">
+        <h4 style="font-weight: normal;">
+          活动规则
+          <div class="el-separate"></div>
+        </h4>
+
+        <ol style="list-style: inside decimal;">
+          <li>结算周期按自然周计算，未结算额度将于隔周一零点后清零，并于隔周一晚间六点前结算派发至账户内</li>
+          <li>结算周期按自然周计算，未结算额度将于隔周一零点后清零，并于隔周一晚间六点前结算派发至账户内</li>
+        </ol>
+      </div>
+      <div class="layout-bottom"></div>
+    </div>
+  </body>
+</html>

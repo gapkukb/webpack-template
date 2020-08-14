@@ -1,0 +1,87 @@
++namespace(button)
+    padding: 0.2em 0.8em
+    border-radius: $border-radius
+    text-transform: uppercase
+    transition: opacity 0.2s
+    cursor: pointer
+    // line-height: 1
+    user-select: none
+
+    +modifier(small)
+        font-size: 12px
+
+    +modifier(large)
+        font-size: 16px
+
++namespace(button-group)
+    display: inline-flex
+    overflow: hidden
+    border-radius: $global-border-radius
+    // -webkit-mask-image: -webkit-radial-gradient(white, black);
+    transform: translateZ(0)
+
+    >.button
+        border-radius: 0
+
++namespace(dropdown)
+    position: relative
+
+    &:after
+        content: ''
+        display: inline-namespace
+        border: 0.4em solid transparent
+        transform: translateY(0.2em)
+        border-top-color: currentColor
+
+    +modifier(body)
+        display: none
+        position: absolute
+        border-radius: $global-border-radius
+        border: $border
+        color: inherit
+        line-height: 2em
+        background-color: inherit
+        z-index 2
+        max-height 100px
+        overflow hidden auto
+        overscroll-behavior: contain;
+
+        ^[0]:focus>&
+            display: namespace
+
+    +modifier(top, left)
+        bottom: 100%
+        left: 0px
+
+    +modifier(top, right)
+        bottom: 100%
+        right: 0px
+
+    +modifier(btm, left)
+        top: 100%
+        left: 0px
+
+    +modifier(btm, right)
+        top: 100%
+        right: 0px
+
+    +modifier(item)
+        position: relative
+        display namespace
+        cursor pointer
+        &:after
+            content: ''
+            position: absolute
+            pointer-events: none
+            left: 0px
+            right: 0px
+            top: 0px
+            bottom: 0px
+            display none
+            background-color rgba(0, 0, 0, 0.1)
+
+        &-active:after,&:hover:after
+            display namespace
+:checked~:after
+    display namespace !important
+
