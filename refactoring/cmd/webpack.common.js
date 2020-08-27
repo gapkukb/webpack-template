@@ -34,7 +34,7 @@ entries.forEach(item => {
 
 config.output
   .path(resolve('../..'))
-  // .publicPath("/")
+  .publicPath("/")
   .pathinfo(false)
   .filename(jsname())
   .chunkFilename(jsname())
@@ -248,3 +248,5 @@ module.exports.extract = (common, open = false) => {
   ]);
 };
 // module.exports = config.toConfig();
+
+
