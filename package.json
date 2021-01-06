@@ -62,7 +62,7 @@
     "webpack-merge": "^5.0.9"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chart.js": "^2.9.3",
     "collect.js": "^4.28.0",
     "dayjs": "^1.8.29",
