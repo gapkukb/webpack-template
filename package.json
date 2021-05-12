@@ -70,7 +70,7 @@
     "lazy.js": "^0.5.1",
     "lodash": "^4.17.19",
     "lodash-es": "^4.17.15",
-    "mathjs": "^7.1.0"
+    "mathjs": "^7.5.1"
   },
   "postcss": {
     "sourceMap": false,
