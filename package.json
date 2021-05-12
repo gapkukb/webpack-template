@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "collect.js": "^4.28.0",
     "dayjs": "^1.8.29",
     "jquery": "^3.5.1",
