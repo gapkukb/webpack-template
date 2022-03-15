@@ -69,7 +69,7 @@
     "jquery": "^3.5.1",
     "lazy.js": "^0.5.1",
     "lodash": "^4.17.19",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.17.21",
     "mathjs": "^7.1.0"
   },
   "postcss": {
